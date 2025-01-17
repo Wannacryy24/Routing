@@ -1,10 +1,33 @@
+import { useState } from "react";
 import { Route, BrowserRouter as Router, Routes, Link, useNavigate, Outlet} from "react-router-dom";
 
 function App() {
+  const [SearchQuery,SetSearchQuery] = useState('');
+
   const Home = ()=><h1>HOME</h1>
+
   const PageNotFound = () => <h1>Page Not Found</h1>
+
   const About = () => <h1>About</h1>
+
   const ContactUs = () => <h1>Contact Us</h1>
+
+  const SearchBar = () =>{
+    const navigate = useNavigate(); // To change the URL
+    const handleChangeInput = (e) => {
+      console.log(e.target.value);
+      SetSearchQuery(e.target.value);
+      navigate(`/${e.target.value}`);
+    }
+    
+    return (
+      <>
+      <h1>Search</h1>
+      <input type="text" onChange={handleChangeInput} value={SearchQuery} autoFocus/>
+      </>
+    )
+  }
+
   const More = ()=> (
     <>
       <h2>More</h2>
@@ -18,7 +41,9 @@ function App() {
     </>
   )
   const One = () => <h1>ONE</h1>
+
   const Two = () => <h1>TWO</h1>;
+  
   function Header (){
     const navigate = useNavigate();
     const handleNavigation = ()=>{
@@ -26,6 +51,7 @@ function App() {
     }
     return(
       <>
+        <SearchBar/>
         <header>
           <Link to="/" > Home </Link>
           <Link to="/About" > About </Link>
